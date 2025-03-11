@@ -73,15 +73,13 @@ template <typename T> struct ExternalContainer {
         }
 
         if (m_file.eof()) {
-            std::cerr << "End of file reached." << std::endl;
+            printf("End of file reached.");
         } else if (m_file.fail()) {
-            std::cerr << "Read failed: Non-fatal I/O error (e.g., type "
-                         "mismatch, format error)."
-                      << std::endl;
+            printf("Read failed: Non-fatal I/O error (e.g., type mismatch,"
+                   "format error).");
         } else if (m_file.bad()) {
-            std::cerr << "Read failed: Fatal I/O error (e.g., hardware "
-                         "failure, corruption)."
-                      << std::endl;
+            printf("Read failed: Fatal I/O error (e.g., hardware "
+                   "failure, corruption).");
         }
 
         outfile.close();

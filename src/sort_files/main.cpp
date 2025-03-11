@@ -1,6 +1,5 @@
 
 #include <chrono>
-#include <iostream>
 
 #include "external_container.hpp"
 
@@ -70,7 +69,6 @@ template <typename T> void ExternalMerge<T>::_merge_sort(T arr, int l, int r) {
         if (m_thd_avail > 1 &&
             m_thd_avail.compare_exchange_strong(val, val - 2)) {
             std::thread lthd([&]() {
-                std::cout << "enter 1 thd\n";
                 cur_tid = std::this_thread::get_id();
                 mapMtx.lock();
                 _init_thread_buf();
@@ -79,7 +77,6 @@ template <typename T> void ExternalMerge<T>::_merge_sort(T arr, int l, int r) {
                 _merge_sort(arr, l, m);
             });
             std::thread rthd([&]() {
-                std::cout << "enter 2 thd\n";
                 cur_tid = std::this_thread::get_id();
                 mapMtx.lock();
                 _init_thread_buf();
@@ -143,9 +140,13 @@ template <typename T> void ExternalMerge<T>::merge(T arr, int l, int m, int r) {
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
+        printf("provide source and destenation filenames!\n");
+        return -1;
+    }
     ExternalContainer<double> ec(MemLimit, false);
-    int total_size = ec.prepare_workfile("./half.txt", "./half.wf");
+    int total_size = ec.prepare_workfile(argv[1], "./plane.wf");
 
     ExternalMerge<ExternalContainer<double> &> sorter(MemLimit, 0);
     const auto start = std::chrono::high_resolution_clock::now();
@@ -154,7 +155,7 @@ int main() {
     std::chrono::duration<double> diff = end - start;
     printf("time spent %lf\n", diff.count());
 
-    ec.store_readable("./half.sorted.txt");
+    ec.store_readable(argv[2]);
 
     for (int j = 1; j < total_size; j++) {
         if (ec[j - 1] > ec[j]) {

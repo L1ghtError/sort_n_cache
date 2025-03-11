@@ -20,9 +20,12 @@ $ sort_files input.txt input.sorted.txt
 > **features/limitations:**
 >
 > - Uses `placament new` to reduce memory allocs
-> - To support multi thread program uses thread-specific buffers **Multithreading is not done completely!**
+> - To support multi thread program uses thread-specific buffers
+> - **Multithreading is not done completely!**
+> * **Note:** On `linux` sorting takes approximately 2 min, while on win it may take +-18 min.
 
 ## `cache_files` usage (interaction via `cin`/`cout`)
 ```bash
 $ cache_files
 ```
+
