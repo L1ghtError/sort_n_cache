@@ -1,0 +1,46 @@
+# Prerequisites
+*.d
+__pycache__
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Ncnn models
+*.bin
+*.param
+
+# Directories
+build
+.vs
+Build
+.vscode
+vscode
+
+# Special Files
+reocnf_store.json
