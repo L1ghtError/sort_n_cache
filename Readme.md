@@ -20,7 +20,9 @@ $ sort_files input.txt input.sorted.txt
 > **features/limitations:**
 >
 > - Uses `placament new` to reduce memory allocs
-> - To support multi thread program uses thread-specific buffers
+> - To support multi threading, `ExternalMerge` uses `bufMap` and `tmpMap` <br/>
+that distributes specific memory regions and temporary buffers to appropriate threads,<br/>
+but still `ExternalContainer` need respective equivalent of that mechanism
 > - **Multithreading is not done completely!**
 > * **Note:** On `linux` sorting takes approximately 2 min, while on win it may take +-18 min.
 

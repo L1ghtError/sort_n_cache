@@ -145,9 +145,10 @@ int main(int argc, char *argv[]) {
         printf("provide source and destenation filenames!\n");
         return -1;
     }
+    printf("started to sort %s.\n", argv[1]);
     ExternalContainer<double> ec(MemLimit, false);
     int total_size = ec.prepare_workfile(argv[1], "./plane.wf");
-
+    printf("generation of plane file is done.\n");
     ExternalMerge<ExternalContainer<double> &> sorter(MemLimit, 0);
     const auto start = std::chrono::high_resolution_clock::now();
     sorter.merge_sort(ec, total_size);
@@ -156,13 +157,13 @@ int main(int argc, char *argv[]) {
     printf("time spent %lf\n", diff.count());
 
     ec.store_readable(argv[2]);
-
+    printf("starting file validation.\n");
     for (int j = 1; j < total_size; j++) {
         if (ec[j - 1] > ec[j]) {
-            printf("Error %lf is larger than %lf", ec[j - 1], ec[j]);
+            printf("Error \n%lf\n is larger than \n%lf\n", ec[j - 1], ec[j]);
             return -1;
         }
     }
-
+    printf("file is well sorted.\ngoodbye.");
     return 0;
 }
